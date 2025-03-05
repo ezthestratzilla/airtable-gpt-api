@@ -5,29 +5,8 @@ const cors = require("cors");
 
 const app = express();
 app.use(express.json());
-app.use(cors());
-
-const PORT = process.env.PORT || 3000;
-const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
-const AIRTABLE_TABLE_NAME = process.env.AIRTABLE_TABLE_NAME;
-const AIRTABLE_PAT = process.env.AIRTABLE_PAT;
-
-// 🔹 Fetch Client Feedback from Airtable
-app.get("/client-feedback/:clientName", async (req, res) => {
-    const { clientName } = req.params;
-    const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}?filterByFormula={Client Name}='${clientName}'`;
-
-    try {
-        const response = await axios.get(url, {
- require("dotenv").config();
-const express = require("express");
-const axios = require("axios");
-const cors = require("cors");
-
-const app = express();
-app.use(express.json());
 app.use(cors({
-    origin: "*",  // Allows requests from anywhere
+    origin: "*",  
     methods: "GET,POST",
     allowedHeaders: "Content-Type,Authorization"
 }));
@@ -130,7 +109,7 @@ app.get("/content-library/:contentType", async (req, res) => {
     }
 });
 
-// 🔹 Fetch Full Brand Overview
+// 🔹 Fetch Full Brand Overview (Combining Brand, Campaigns, and Personas)
 app.get("/brand-overview/:brandName", async (req, res) => {
     const { brandName } = req.params;
     const brandVoiceUrl = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Brand%20Voices?filterByFormula={Brand Name}='${brandName}'`;
